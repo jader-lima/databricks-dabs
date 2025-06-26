@@ -1,33 +1,41 @@
-name: CI/CD Heroes
+name: CI/CD Villains
 
 on:
   push:
     paths:
-      - 'heroes/**'
+      - 'villains/**'
   pull_request:
     paths:
-      - 'heroes/**'
+      - 'villains/**'
 
 jobs:
-  deploy-heroes:
+  deploy-villains:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repositório
         uses: actions/checkout@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
       - name: Setup Databricks CLI
-        uses: databricks/setup-cli@v1
+        uses: databricks/setup-cli@main
+
 
       - name: Validar bundle
-        working-directory: heroes
+        working-directory: villains
         run: databricks bundle validate
 
       - name: Deploy bundle para o Databricks
-        working-directory: heroes
+        working-directory: villains
         run: databricks bundle deploy
         env:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
 
-
+      - name: Executar o job
+        working-directory: villains
+        run: databricks bundle run job_parceiro1 --target default

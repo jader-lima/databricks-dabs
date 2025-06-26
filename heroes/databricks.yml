@@ -5,7 +5,7 @@ artifacts:
   notebooks:
     type: notebook
     files:
-      - notebooks/*.py
+      - source: notebooks/*.py
 
 resources:
   jobs:

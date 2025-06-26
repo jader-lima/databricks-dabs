@@ -4,7 +4,8 @@ bundle:
 artifacts:
   notebooks:
     type: notebook
-    path: notebooks
+    files:
+      - notebooks/*.py
 
 resources:
   jobs:

@@ -28,6 +28,9 @@ jobs:
       - name: Validar bundle
         working-directory: villains
         run: databricks bundle validate
+        env:
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
 
       - name: Deploy bundle para o Databricks
         working-directory: villains

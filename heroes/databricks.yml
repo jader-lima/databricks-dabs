@@ -1,0 +1,18 @@
+bundle:
+  name: heroes
+
+artifacts:
+  notebooks:
+    type: notebook
+    files:
+      - source: notebooks/*.py
+
+resources:
+  jobs:
+    job1:
+      name: job-heroes
+      tasks:
+        - task_key: task1
+          notebook_task:
+            notebook_path: /Repos/project_heroes_villains/notebooks/heroes.py
+          existing_cluster_id: ${{ secrets.DATABRICKS_SERVLESS_CLUSTER_ID }}

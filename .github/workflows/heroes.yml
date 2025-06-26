@@ -1,0 +1,41 @@
+name: CI/CD Heroes
+
+on:
+  push:
+    paths:
+      - 'heroes/**'
+  pull_request:
+    paths:
+      - 'heroes/**'
+
+jobs:
+  deploy-heroes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Setup Databricks CLI
+        uses: databricks/setup-cli@main
+
+      - name: Validar bundle
+        working-directory: heroes
+        run: databricks bundle validate
+        env:
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+
+      - name: Deploy bundle para o Databricks
+        working-directory: heroes
+        run: databricks bundle deploy
+        env:
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+
+

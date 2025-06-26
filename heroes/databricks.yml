@@ -4,7 +4,7 @@ bundle:
 artifacts:
   notebooks:
     type: notebook
-    path: notebooks/heroes.py
+    path: notebooks
 
 resources:
   jobs:
